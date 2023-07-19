@@ -9,9 +9,9 @@ namespace SalesTax
     class Item
     {
         public string Name { get; }
-        public float Price { get; }
+        public double Price { get; }
 
-        public Item(string name, float price)
+        public Item(string name, double price)
         {
             Name = name;
             Price = price;

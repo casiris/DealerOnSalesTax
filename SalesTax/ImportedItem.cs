@@ -8,9 +8,9 @@ namespace SalesTax
 {
     class ImportedItem : TaxableItem
     {
-        public float ImportTaxRate { get; } = .05f;
+        public double ImportTaxRate { get; } = .05f;
 
-        public ImportedItem(string name, float price) : base(name, price)
+        public ImportedItem(string name, double price) : base(name, price)
         {
 
         }

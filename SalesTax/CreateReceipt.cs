@@ -8,17 +8,17 @@ namespace SalesTax
 {
     class CreateReceipt
     {
-        private List<Item> cartItems = new List<Item>();        // this should be a dictionary, so i can have Item,quantity
-        private float totalTax = 0;
-        private float total = 0;
+        private Cart cart = new Cart();
+        //private double totalTax = 0;
+        //private double total = 0;
 
         // Tax needs to be rounded up to the nearest 5 cents
-        float CalculateTax()
+        double CalculateTax()
         {
             return 0;
         }
 
-        float CalculateTotal()
+        double CalculateTotal()
         {
             return 0;
         }

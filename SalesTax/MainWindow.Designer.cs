@@ -44,6 +44,7 @@ namespace SalesTax
             this.addToCartButton = new System.Windows.Forms.Button();
             this.priceLabel = new System.Windows.Forms.Label();
             this.priceTextBox = new System.Windows.Forms.TextBox();
+            this.clearCartButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.quantitySlider)).BeginInit();
             this.itemCategoryGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -200,11 +201,21 @@ namespace SalesTax
             this.priceTextBox.TabIndex = 2;
             this.priceTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.priceTextBox_KeyPress);
             // 
+            // clearCartButton
+            // 
+            this.clearCartButton.Location = new System.Drawing.Point(385, 195);
+            this.clearCartButton.Name = "clearCartButton";
+            this.clearCartButton.Size = new System.Drawing.Size(96, 27);
+            this.clearCartButton.TabIndex = 31;
+            this.clearCartButton.Text = "Clear Cart";
+            this.clearCartButton.UseVisualStyleBackColor = true;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1259, 450);
+            this.Controls.Add(this.clearCartButton);
             this.Controls.Add(this.priceLabel);
             this.Controls.Add(this.priceTextBox);
             this.Controls.Add(this.addToCartButton);
@@ -242,6 +253,7 @@ namespace SalesTax
         private System.Windows.Forms.Button addToCartButton;
         private System.Windows.Forms.Label priceLabel;
         private System.Windows.Forms.TextBox priceTextBox;
+        private System.Windows.Forms.Button clearCartButton;
     }
 }
 
