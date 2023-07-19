@@ -1,0 +1,10 @@
+C:\Users\acuff\source\repos\SalesTax\SalesTax\bin\Debug\SalesTax.exe.config
+C:\Users\acuff\source\repos\SalesTax\SalesTax\bin\Debug\SalesTax.exe
+C:\Users\acuff\source\repos\SalesTax\SalesTax\bin\Debug\SalesTax.pdb
+C:\Users\acuff\source\repos\SalesTax\SalesTax\obj\Debug\SalesTax.csprojAssemblyReference.cache
+C:\Users\acuff\source\repos\SalesTax\SalesTax\obj\Debug\SalesTax.MainWindow.resources
+C:\Users\acuff\source\repos\SalesTax\SalesTax\obj\Debug\SalesTax.Properties.Resources.resources
+C:\Users\acuff\source\repos\SalesTax\SalesTax\obj\Debug\SalesTax.csproj.GenerateResource.cache
+C:\Users\acuff\source\repos\SalesTax\SalesTax\obj\Debug\SalesTax.csproj.CoreCompileInputs.cache
+C:\Users\acuff\source\repos\SalesTax\SalesTax\obj\Debug\SalesTax.exe
+C:\Users\acuff\source\repos\SalesTax\SalesTax\obj\Debug\SalesTax.pdb
