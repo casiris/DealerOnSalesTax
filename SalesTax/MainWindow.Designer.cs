@@ -36,7 +36,6 @@ namespace SalesTax
             this.quantityLabel = new System.Windows.Forms.Label();
             this.receiptRichTextBox = new System.Windows.Forms.RichTextBox();
             this.itemCategoryGroupBox = new System.Windows.Forms.GroupBox();
-            this.importedItemsRadioButton = new System.Windows.Forms.RadioButton();
             this.miscItemsRadioButton = new System.Windows.Forms.RadioButton();
             this.medicalProductsRadioButton = new System.Windows.Forms.RadioButton();
             this.bookRadioButton = new System.Windows.Forms.RadioButton();
@@ -45,6 +44,7 @@ namespace SalesTax
             this.priceLabel = new System.Windows.Forms.Label();
             this.priceTextBox = new System.Windows.Forms.TextBox();
             this.clearCartButton = new System.Windows.Forms.Button();
+            this.importedItemCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.quantitySlider)).BeginInit();
             this.itemCategoryGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -55,10 +55,16 @@ namespace SalesTax
             this.itemInputTextBox.Name = "itemInputTextBox";
             this.itemInputTextBox.Size = new System.Drawing.Size(156, 20);
             this.itemInputTextBox.TabIndex = 1;
+            this.itemInputTextBox.TextChanged += new System.EventHandler(this.itemInputTextBox_Leave);
             // 
             // quantitySlider
             // 
             this.quantitySlider.Location = new System.Drawing.Point(487, 36);
+            this.quantitySlider.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.quantitySlider.Name = "quantitySlider";
             this.quantitySlider.Size = new System.Drawing.Size(55, 20);
             this.quantitySlider.TabIndex = 3;
@@ -74,8 +80,9 @@ namespace SalesTax
             this.calculateTotalButton.Name = "calculateTotalButton";
             this.calculateTotalButton.Size = new System.Drawing.Size(177, 83);
             this.calculateTotalButton.TabIndex = 30;
-            this.calculateTotalButton.Text = "Calculate Total";
+            this.calculateTotalButton.Text = "Checkout";
             this.calculateTotalButton.UseVisualStyleBackColor = true;
+            this.calculateTotalButton.Click += new System.EventHandler(this.calculateTotalButton_Click);
             // 
             // itemNameLabel
             // 
@@ -107,7 +114,7 @@ namespace SalesTax
             // 
             // itemCategoryGroupBox
             // 
-            this.itemCategoryGroupBox.Controls.Add(this.importedItemsRadioButton);
+            this.itemCategoryGroupBox.Controls.Add(this.importedItemCheckBox);
             this.itemCategoryGroupBox.Controls.Add(this.miscItemsRadioButton);
             this.itemCategoryGroupBox.Controls.Add(this.medicalProductsRadioButton);
             this.itemCategoryGroupBox.Controls.Add(this.bookRadioButton);
@@ -119,17 +126,6 @@ namespace SalesTax
             this.itemCategoryGroupBox.TabStop = false;
             this.itemCategoryGroupBox.Text = "Item Category";
             // 
-            // importedItemsRadioButton
-            // 
-            this.importedItemsRadioButton.AutoSize = true;
-            this.importedItemsRadioButton.Location = new System.Drawing.Point(6, 112);
-            this.importedItemsRadioButton.Name = "importedItemsRadioButton";
-            this.importedItemsRadioButton.Size = new System.Drawing.Size(94, 17);
-            this.importedItemsRadioButton.TabIndex = 4;
-            this.importedItemsRadioButton.TabStop = true;
-            this.importedItemsRadioButton.Text = "Imported Items";
-            this.importedItemsRadioButton.UseVisualStyleBackColor = true;
-            // 
             // miscItemsRadioButton
             // 
             this.miscItemsRadioButton.AutoSize = true;
@@ -137,7 +133,6 @@ namespace SalesTax
             this.miscItemsRadioButton.Name = "miscItemsRadioButton";
             this.miscItemsRadioButton.Size = new System.Drawing.Size(120, 17);
             this.miscItemsRadioButton.TabIndex = 3;
-            this.miscItemsRadioButton.TabStop = true;
             this.miscItemsRadioButton.Text = "Miscellaneous Items";
             this.miscItemsRadioButton.UseVisualStyleBackColor = true;
             // 
@@ -148,7 +143,6 @@ namespace SalesTax
             this.medicalProductsRadioButton.Name = "medicalProductsRadioButton";
             this.medicalProductsRadioButton.Size = new System.Drawing.Size(107, 17);
             this.medicalProductsRadioButton.TabIndex = 2;
-            this.medicalProductsRadioButton.TabStop = true;
             this.medicalProductsRadioButton.Text = "Medical Products";
             this.medicalProductsRadioButton.UseVisualStyleBackColor = true;
             // 
@@ -159,13 +153,13 @@ namespace SalesTax
             this.bookRadioButton.Name = "bookRadioButton";
             this.bookRadioButton.Size = new System.Drawing.Size(55, 17);
             this.bookRadioButton.TabIndex = 1;
-            this.bookRadioButton.TabStop = true;
             this.bookRadioButton.Text = "Books";
             this.bookRadioButton.UseVisualStyleBackColor = true;
             // 
             // foodRadioButton
             // 
             this.foodRadioButton.AutoSize = true;
+            this.foodRadioButton.Checked = true;
             this.foodRadioButton.Location = new System.Drawing.Point(7, 20);
             this.foodRadioButton.Name = "foodRadioButton";
             this.foodRadioButton.Size = new System.Drawing.Size(49, 17);
@@ -176,6 +170,7 @@ namespace SalesTax
             // 
             // addToCartButton
             // 
+            this.addToCartButton.Enabled = false;
             this.addToCartButton.Location = new System.Drawing.Point(360, 123);
             this.addToCartButton.Name = "addToCartButton";
             this.addToCartButton.Size = new System.Drawing.Size(144, 50);
@@ -199,6 +194,7 @@ namespace SalesTax
             this.priceTextBox.Name = "priceTextBox";
             this.priceTextBox.Size = new System.Drawing.Size(84, 20);
             this.priceTextBox.TabIndex = 2;
+            this.priceTextBox.TextChanged += new System.EventHandler(this.priceTextBox_Leave);
             this.priceTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.priceTextBox_KeyPress);
             // 
             // clearCartButton
@@ -206,9 +202,20 @@ namespace SalesTax
             this.clearCartButton.Location = new System.Drawing.Point(385, 195);
             this.clearCartButton.Name = "clearCartButton";
             this.clearCartButton.Size = new System.Drawing.Size(96, 27);
-            this.clearCartButton.TabIndex = 31;
+            this.clearCartButton.TabIndex = 21;
             this.clearCartButton.Text = "Clear Cart";
             this.clearCartButton.UseVisualStyleBackColor = true;
+            this.clearCartButton.Click += new System.EventHandler(this.clearCartButton_Click);
+            // 
+            // importedItemCheckBox
+            // 
+            this.importedItemCheckBox.AutoSize = true;
+            this.importedItemCheckBox.Location = new System.Drawing.Point(6, 112);
+            this.importedItemCheckBox.Name = "importedItemCheckBox";
+            this.importedItemCheckBox.Size = new System.Drawing.Size(90, 17);
+            this.importedItemCheckBox.TabIndex = 5;
+            this.importedItemCheckBox.Text = "Imported Item";
+            this.importedItemCheckBox.UseVisualStyleBackColor = true;
             // 
             // MainWindow
             // 
@@ -245,7 +252,6 @@ namespace SalesTax
         private System.Windows.Forms.Label quantityLabel;
         private System.Windows.Forms.RichTextBox receiptRichTextBox;
         private System.Windows.Forms.GroupBox itemCategoryGroupBox;
-        private System.Windows.Forms.RadioButton importedItemsRadioButton;
         private System.Windows.Forms.RadioButton miscItemsRadioButton;
         private System.Windows.Forms.RadioButton medicalProductsRadioButton;
         private System.Windows.Forms.RadioButton bookRadioButton;
@@ -254,6 +260,7 @@ namespace SalesTax
         private System.Windows.Forms.Label priceLabel;
         private System.Windows.Forms.TextBox priceTextBox;
         private System.Windows.Forms.Button clearCartButton;
+        private System.Windows.Forms.CheckBox importedItemCheckBox;
     }
 }
 

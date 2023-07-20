@@ -8,11 +8,19 @@ namespace SalesTax
 {
     class Cart
     {
-        private List<Item> cartItems = new List<Item>();        // this should be a dictionary, so i can have Item,quantity
+        //public IDictionary<Item, int> CartItems { get; } = new Dictionary<Item, int>();
+        public List<Item> CartItems { get; } = new List<Item>();
+        public List<int> CartQuantity { get; } = new List<int>();
 
-        public void AddToCart(Item item)
+        public void AddToCart(Item item, int quantity)
         {
-            Console.WriteLine("new item added to cart");
+            CartItems.Add(item);
+            CartQuantity.Add(quantity);
+        }
+
+        public void ClearCart()
+        {
+            CartItems.Clear();
         }
     }
 }

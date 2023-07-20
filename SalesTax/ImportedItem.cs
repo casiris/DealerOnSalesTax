@@ -8,11 +8,16 @@ namespace SalesTax
 {
     class ImportedItem : TaxableItem
     {
-        public double ImportTaxRate { get; } = .05f;
+        public double ImportedTaxRate { get; private set; } = 0.05;
 
-        public ImportedItem(string name, double price) : base(name, price)
+        public ImportedItem(string name, double price, bool additionalTax) : base(name, price)
         {
-
+            //Name = "Imported " + Name;
+            if (additionalTax)
+            {
+                ImportedTaxRate += TaxRate;
+                Console.WriteLine("imported double tax: {0}", ImportedTaxRate);
+            }
         }
     }
 }

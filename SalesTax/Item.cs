@@ -8,7 +8,7 @@ namespace SalesTax
 {
     class Item
     {
-        public string Name { get; }
+        public string Name { get; private set; }
         public double Price { get; }
 
         public Item(string name, double price)

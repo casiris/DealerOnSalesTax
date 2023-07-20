@@ -8,7 +8,7 @@ namespace SalesTax
 {
     class TaxableItem : Item
     {
-        public double TaxRate { get; } = .1f;
+        public double TaxRate { get; } = 0.1;
 
         public TaxableItem(string name, double price) : base(name, price)
         {
