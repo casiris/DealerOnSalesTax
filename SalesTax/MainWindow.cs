@@ -24,12 +24,13 @@ namespace SalesTax
 
         }
 
-        // When adding to cart, create an Item using the name, price, and quantity fields, and using the radio buttons to determine the type of Item
         private void addToCartButton_Click(object sender, EventArgs e)
         {
-            double inputPrice = 0;
+            double inputPrice;
             double.TryParse(priceTextBox.Text, out inputPrice);
             inputPrice = Math.Round(inputPrice, 2);
+
+            int inputQuantity = Convert.ToInt32(quantitySlider.Value);
 
             Item itemToBeAdded;
 
@@ -39,38 +40,30 @@ namespace SalesTax
                 if (foodRadioButton.Checked || bookRadioButton.Checked || medicalProductsRadioButton.Checked)
                 {
                     // create ImportedItem with import tax only
-                    itemToBeAdded = new ImportedItem(itemInputTextBox.Text, inputPrice, false);
+                    itemToBeAdded = new ImportedItem(itemInputTextBox.Text, inputPrice, inputQuantity, false);
                 }
                 else
                 {
                     // create ImportedItem with import tax plus regular sales tax
-                    itemToBeAdded = new ImportedItem(itemInputTextBox.Text, inputPrice, true);
+                    itemToBeAdded = new ImportedItem(itemInputTextBox.Text, inputPrice, inputQuantity, true);
                 }
             }
             else
             {
                 if (foodRadioButton.Checked || bookRadioButton.Checked || medicalProductsRadioButton.Checked)
                 {
-                    // create Item (non taxed item)
-                    itemToBeAdded = new Item(itemInputTextBox.Text, inputPrice);
+                    itemToBeAdded = new Item(itemInputTextBox.Text, inputPrice, inputQuantity);
                 }
                 else
                 {
-                    // create TaxableItem
-                    itemToBeAdded = new TaxableItem(itemInputTextBox.Text, inputPrice);
+                    itemToBeAdded = new TaxableItem(itemInputTextBox.Text, inputPrice, inputQuantity);
                 }
             }
 
             cart.AddToCart(itemToBeAdded, Convert.ToInt32(quantitySlider.Value));
             receiptRichTextBox.Text += $"{itemToBeAdded.Name}: ({Convert.ToInt32(quantitySlider.Value)} @ {itemToBeAdded.Price.ToString("N2")} each) added to cart.\n";
 
-            // Reset input fields
-            itemInputTextBox.Text = "";
-            priceTextBox.Text = "";
-            quantitySlider.Value = 1;
-            addToCartButton.Enabled = false;
-            foodRadioButton.Checked = true;
-            importedItemCheckBox.Checked = false;
+            ResetInputFields();
         }
 
         // Prevent user from entering non-numeric values
@@ -91,9 +84,8 @@ namespace SalesTax
         private void clearCartButton_Click(object sender, EventArgs e)
         {
             cart.ClearCart();
+            ResetInputFields();
             receiptRichTextBox.Text = "";
-            foodRadioButton.Checked = true;
-            importedItemCheckBox.Checked = false;
         }
 
         // Activate Add to Cart button only if both the Item Name and Price fields are filled
@@ -118,18 +110,34 @@ namespace SalesTax
             Receipt receipt = new Receipt();
             receipt.CalculateTotal(cart);
 
+            ResetInputFields();
             receiptRichTextBox.Text = "";
-            foodRadioButton.Checked = true;
-            importedItemCheckBox.Checked = false;
 
-            for (int i = 0; i < cart.CartItems.Count(); i++)
+            double totalTax = receipt.CalculateTax(cart);
+            double total = receipt.CalculateTotal(cart);
+
+            int taxedItemIndex = 0;
+
+            foreach(KeyValuePair<string, Item> item in cart.CartItems)
             {
-                receiptRichTextBox.Text += $"{cart.CartItems[i].Name}: {receipt.PerItemWithTax[i].ToString("N2")} ({cart.CartQuantity[i]} @ {cart.CartItems[i].Price.ToString("N2")})\n";
+                receiptRichTextBox.Text += $"{item.Value.Name}: {receipt.PerItemWithTax[taxedItemIndex].ToString("N2")} ({item.Value.Quantity} @ {item.Value.Price.ToString("N2")})\n";
+                taxedItemIndex++;
             }
-            receiptRichTextBox.Text += $"\nSales Taxes: {receipt.runningTax.ToString("N2")}\n";
-            receiptRichTextBox.Text += $"Total: {receipt.runningTotal.ToString("N2")}\n";
+
+            receiptRichTextBox.Text += $"\nSales Taxes: {totalTax.ToString("N2")}\n";
+            receiptRichTextBox.Text += $"Total: {total.ToString("N2")}";
 
             cart.ClearCart();
+        }
+
+        private void ResetInputFields()
+        {
+            itemInputTextBox.Text = "";
+            priceTextBox.Text = "";
+            quantitySlider.Value = 1;
+            addToCartButton.Enabled = false;
+            foodRadioButton.Checked = true;
+            importedItemCheckBox.Checked = false;
         }
     }
 }

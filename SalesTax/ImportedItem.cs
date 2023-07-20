@@ -10,13 +10,13 @@ namespace SalesTax
     {
         public double ImportedTaxRate { get; private set; } = 0.05;
 
-        public ImportedItem(string name, double price, bool additionalTax) : base(name, price)
+        public ImportedItem(string name, double price, int quantity, bool additionalTax) : base(name, price, quantity)
         {
-            //Name = "Imported " + Name;
+            Name = $"Imported {Name}";
+
             if (additionalTax)
             {
                 ImportedTaxRate += TaxRate;
-                Console.WriteLine("imported double tax: {0}", ImportedTaxRate);
             }
         }
     }

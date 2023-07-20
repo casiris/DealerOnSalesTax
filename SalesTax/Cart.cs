@@ -8,14 +8,18 @@ namespace SalesTax
 {
     class Cart
     {
-        //public IDictionary<Item, int> CartItems { get; } = new Dictionary<Item, int>();
-        public List<Item> CartItems { get; } = new List<Item>();
-        public List<int> CartQuantity { get; } = new List<int>();
+        public Dictionary<string, Item> CartItems { get; } = new Dictionary<string, Item>();
 
         public void AddToCart(Item item, int quantity)
         {
-            CartItems.Add(item);
-            CartQuantity.Add(quantity);
+            if (CartItems.ContainsKey(item.Name))
+            {
+                CartItems[item.Name].IncreaseQuantity(quantity);
+            }
+            else
+            {
+                CartItems.Add(item.Name, item);
+            }
         }
 
         public void ClearCart()
